@@ -1,5 +1,4 @@
 import traverse from 'traverse';
-import objectPath from 'object-path';
 
 const envPlaceholder = /\$\{([\w]+)\}/u;
 const envPlaceholderCleanup = /(^[^$]*)(\$\{)([\w]+)(\})(.*)/u;
@@ -18,8 +17,6 @@ const replaceEnvPlaceholder = path => {
   return path;
 };
 
-const isSsmString = (element) => element.match(isSsmStringRegex);
-
 export default {
   getValuesFromEnv(data) {
     return traverse(data).map(element => {
@@ -31,7 +28,5 @@ export default {
   },
 };
 
-export {
-  replaceEnvPlaceholder,
-};
+export { replaceEnvPlaceholder };
 

@@ -1,6 +1,6 @@
 {
   "name": "env-inject-params",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Add Environment parameter values into object.",
   "repository": {
     "type": "git",
