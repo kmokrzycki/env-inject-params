@@ -59,6 +59,20 @@ describe('Make sure replaceEnvPlaceholder captures placeholders strings', () => 
   });
 });
 
+describe('Empty value is still accepted as long as env placeholder is defined', () => {
+
+  process.env.EMPTY = '';
+  it('Placeholders on its own are recognized', async () => {
+    const result = EnvInject.replaceEnvPlaceholder('${EMPTY}');
+    const expected = '';
+    expect(result).to.equal(expected);
+  });
+  it('Placeholders on its own are recognized', async () => {
+    const result = EnvInject.replaceEnvPlaceholder('/some_text_${EMPTY}_more');
+    const expected = '/some_text__more';
+    expect(result).to.equal(expected);
+  });
+});
 
 describe('Make sure getValuesFromEnv replaces placeholders in complex objects', () => {
   it('Placeholders in objects should be replaced', async () => {

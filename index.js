@@ -1,1 +1,1 @@
-module.exports = require('./compiled/aws-ssm-inject-params');
+module.exports = require('./compiled/env-inject-params');

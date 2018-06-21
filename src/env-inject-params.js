@@ -8,7 +8,7 @@ const replaceEnvPlaceholder = path => {
   if (hasEnvPlaceholder) {
     const envVariable = hasEnvPlaceholder[1];
     const value = process.env[envVariable];
-    if (!value) {
+    if (value === undefined || value === null) {
       throw new Error(`ENV Placeholder '${envVariable}' undefined !`);
     }
     const replaced = path.replace(envPlaceholderCleanup, `$1${value}$5`);
