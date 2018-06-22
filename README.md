@@ -57,38 +57,3 @@ If given placeholder is not defined in environment exception is thrown:
  ```
  Error: 'ENV Placeholder 'NO_SUCH_THING' undefined !'
  ```
-
-### Prepare data in AWS with AWS CLI:
-
-#### Adding new parameter:
-```bash
-aws ssm put-parameter --name '/application/message' --value 'Hello AWS-SSM World !'  --type 'String'
-```
-
-#### Reading new parameter:
-```bash
-aws ssm get-parameters --names "/application/message"
-{
-    "Parameters": [
-        {
-            "Name": "/application/message",
-            "Type": "String",
-            "Value": "Hello AWS-SSM World !"
-        }
-    ],
-    "InvalidParameters": []
-}
-```
-## Troubleshooting
-### Missing region in config
-Please export AWS Region
-```bash
-export AWS_REGION='eu-west-1'
-```
-or if your system already has AWS_DEFAULT_REGION
-```bash
-export AWS_REGION=$AWS_DEFAULT_REGION
-```
-
-
-
