@@ -1,7 +1,7 @@
 import traverse from 'traverse';
 
-const envPlaceholder = /\$\{([\w]+)\}/u;
-const envPlaceholderCleanup = /(^[^$]*)(\$\{)([\w]+)(\})(.*)/u;
+const envPlaceholder = /\$\{([A-z0-9_-]+)\}/u;
+const envPlaceholderCleanup = /(^[^$]*)(\$\{)([A-z0-9_-]+)(\})(.*)/u;
 
 const replaceEnvPlaceholder = path => {
   const hasEnvPlaceholder = path.match(envPlaceholder);
@@ -11,7 +11,12 @@ const replaceEnvPlaceholder = path => {
     if (value === undefined || value === null) {
       throw new Error(`ENV Placeholder '${envVariable}' undefined !`);
     }
-    const replaced = path.replace(envPlaceholderCleanup, `$1${value}$5`);
+    let replaced = path.replace(envPlaceholderCleanup, `$1${value}$5`);
+
+    if (replaced.match(envPlaceholder)) {
+      replaced = replaceEnvPlaceholder(replaced);
+    }
+
     return replaced;
   }
   return path;

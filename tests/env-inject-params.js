@@ -6,6 +6,7 @@ import EnvInjectObj from '../src/env-inject-params';
 
 const { expect } = chai;
 process.env.ENV_TEST = 'test_value';
+process.env.OTHER_ENV_TEST = 'other_test_value';
 
 describe('Make sure replaceEnvPlaceholder captures placeholders strings', () => {
 
@@ -96,6 +97,36 @@ describe('Make sure getValuesFromEnv replaces placeholders in complex objects', 
       EnvInjectObj.getValuesFromEnv(
         {
           one: '${NOT_IN_ENV}',
+          two: 2,
+        },
+      );
+    };
+    expect(throwFunction).to.throw(Error, /ENV Placeholder 'NOT_IN_ENV' undefined !/);
+  });
+});
+
+describe('Make sure getValuesFromEnv replaces all placeholders', () => {
+  it('Placeholders in objects should be replaced', async () => {
+    const result = EnvInject.default.getValuesFromEnv(
+      {
+        short: '${ENV_TEST}${OTHER_ENV_TEST}',
+        long: '/test/${ENV_TEST}${OTHER_ENV_TEST}/value',
+        two: '/test/${ENV_TEST}/${OTHER_ENV_TEST}/value',
+      },
+    );
+    const expected = '/some/test/more/text/test_value';
+    expect(result).to.deep.equal({
+      short: "test_valueother_test_value",
+      long: "/test/test_valueother_test_value/value",
+      two: "/test/test_value/other_test_value/value",
+    });
+  });
+
+  it('Placeholders not in ENV should throw errors', async () => {
+    const throwFunction = () => {
+      EnvInjectObj.getValuesFromEnv(
+        {
+          one: '${ENV_TEST}${NOT_IN_ENV}',
           two: 2,
         },
       );
