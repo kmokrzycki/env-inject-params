@@ -29,7 +29,9 @@
     "lintfix": "eslint ./src --fix",
     "test": "./node_modules/.bin/mocha --recursive ./tests/ --compilers js:babel-core/register",
     "test:coverage": "nyc --reporter=lcov --reporter=text ./node_modules/.bin/mocha --recursive --require babel-register ./tests/",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -58,6 +60,8 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "object-path": "^0.11.4",
     "sinon": "^4.3.0",
-    "traverse": "^0.6.6"
-  }
+    "traverse": "^0.6.6",
+    "snyk": "^1.103.1"
+  },
+  "snyk": true
 }
